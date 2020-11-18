@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import authConfig from '../config/auth';
 
 interface CreateSessionDTO {
   email: string;
@@ -34,9 +35,11 @@ class CreateSessionService {
       throw new Error('Email or password does not match.');
     }
 
-    const token = sign({}, '40fdc6104a9803bd065714f42aefd9e5', {
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn,
     });
 
     return { user, token };
