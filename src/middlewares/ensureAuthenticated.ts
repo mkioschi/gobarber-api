@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { fromString } from 'uuidv4';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/auth';
 
